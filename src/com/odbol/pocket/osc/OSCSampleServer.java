@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,19 +36,41 @@ public class OSCSampleServer extends Activity {
 	 * 
 	 * For testing, it just prints the message, but you can do anything you want with it!
 	 * 
-	 * @author phreakhead
+	 * @author odbol
 	 *
 	 */
 	public class LooperListener extends BasicOscListener {
 		public Context c;
 		
+		/*** 
+		 * this is used to update the textview in the UI thread from a different thread.
+		 * @author odbol
+		 *
+		 */
+		private final class TextViewUpdater implements Runnable {
+			public String msg;
+			
+			public TextViewUpdater(String message) {
+				msg = message;
+			}
+
+			@Override
+		    public void run() {
+		    	TextView t = (TextView) findViewById(R.id.out_text);
+				t.append(msg);
+		    }
+		}
+		
 		@Override
 		public void handleMessage(OscMessage msg) {
 			String val = msg.getArguments().get(0).toString();
-						
-			TextView t = (TextView) findViewById(R.id.out_text);
-			t.append("\nReceived: " + msg.getAddress() + " " + val);
 			
+			//now update the textview.
+			//since it's in the UI thread, we need to access it using a handler
+			Handler h = new Handler(OSCSampleServer.this.getMainLooper());
+			TextViewUpdater u = new TextViewUpdater("\nReceived: " + msg.getAddress() + " " + val);	
+			h.post(u);
+
 			//System.out.println("Message " + msg.getAddress());
 			//System.out.println("Type Tags " + msg.getTypeTags());
 			
@@ -69,8 +92,8 @@ public class OSCSampleServer extends Activity {
         Button twoButtonsTitle = (Button) findViewById(R.id.start_button);
         twoButtonsTitle.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	startTestClient();
             	startListening();
+            	startTestClient();
             }
         });
         
@@ -111,6 +134,7 @@ public class OSCSampleServer extends Activity {
     private void startOscServer() {
     	try {
 			server = new OscServer(oscPort);
+			server.setUDP(true);
 			server.start();
 		}
 		catch (IOException e) {
