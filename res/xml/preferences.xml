@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- This is a primitive example showing the different types of preferences available. -->
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="OSC Tester Client">
+
+        <EditTextPreference
+                android:key="pref_osc_addr"
+                android:title="OSC Server Address"
+                android:defaultValue="127.0.0.1"
+                android:summary="The address of the OSC server you wish to test. Usually 'localhost'"
+                android:dialogTitle="OSC Server Address" />
+                
+         <EditTextPreference
+                android:key="pref_osc_port"
+                android:title="OSC Server Port"
+                android:defaultValue="8000"
+                android:summary="The port of the OSC server you wish to test"
+                android:dialogTitle="OSC Server Port" />               
+ 
+         <EditTextPreference
+                android:key="pref_osc_msg"
+                android:title="OSC Message"
+                android:defaultValue="/test/count"
+                android:summary="The test message to send"
+                android:dialogTitle="OSC Message" />   
+ 
+             
+        <!-- CheckBoxPreference
+                android:key="checkbox_preference"
+                android:title="Start OSC Testing"
+                android:summary="Runs a service in the background that sends OSC messages every 2 seconds." / -->
+ 
+                
+        <!-- ListPreference
+                android:key="list_preference"
+                android:title="@string/title_list_preference"
+                android:summary="@string/summary_list_preference"
+                android:entries="@array/entries_list_preference"
+                android:entryValues="@array/entryvalues_list_preference"
+                android:dialogTitle="@string/dialog_title_list_preference" /-->
+
+    </PreferenceCategory>
+
+    
+</PreferenceScreen>
