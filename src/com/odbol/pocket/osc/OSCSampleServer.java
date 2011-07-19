@@ -26,7 +26,12 @@ import android.widget.Toast;
  * All it needs is a port, and some defined messages that you can send it. 
  * The user will take care of the rest, including running their own OSC client to send you messages. 
  * 
- * @author phreakhead
+ * It uses the OSCLib library from:
+ * 
+ * http://www.assembla.com/wiki/show/osclib
+ *  
+ * 
+ * @author odbol
  *
  */
 public class OSCSampleServer extends Activity {
@@ -37,7 +42,7 @@ public class OSCSampleServer extends Activity {
 	
 	private OscServer server;
 
-	/**
+	/***
 	 * The network port your application will listen to.
 	 * 
 	 * You should let the user set this in your own preferences.
@@ -102,20 +107,21 @@ public class OSCSampleServer extends Activity {
 	}
 
     
-    /**
+    /***
      * This starts your app listening for OSC messages.
      * 
      * You want to call this once your user chooses to start the OSC server - it probably shouldn't be started 
      * by default since it will block that port for any other apps.
      */
     private void startListening() {
-    	if (server == null) {
+    	stopListening(); //unbind from port
+    	
 	    	try {
 				server = new OscServer(oscPort);
 				server.setUDP(true); //as of now, the TCP implementation of OSCLib is broken (getting buffer overflows!), so we have to use UDP.
 				server.start();
 			}
-			catch (IOException e) {
+			catch (Exception e) {
 				Toast.makeText(this, "Failed to start OSC server: " + e.getMessage(), Toast.LENGTH_LONG);
 				return;
 			}
@@ -123,9 +129,22 @@ public class OSCSampleServer extends Activity {
 			
 			TextView t = (TextView) findViewById(R.id.out_text);
 			t.append("\nListening on port " + oscPort);
+    }
+    
+    private void stopListening() {
+    	if (server != null) {
+    		server.stop();
+    		server = null;
     	}
     }
     
+    @Override
+    public void onDestroy() {
+    	stopListening();
+    	
+    	super.onDestroy();
+    }
+
     
     /***
      * This just starts the OSCTesterClient service.
@@ -138,8 +157,16 @@ public class OSCSampleServer extends Activity {
     	startService(intent);
     }
     
+    private void stopTestClient() {
+    	Intent intent = new Intent(this, OSCTesterClientService.class);
+    	stopService(intent);
+    }  
     
-    /** Called when the activity is first created. */
+    private boolean isServiceStarted = false;
+
+    private boolean isListening = false;
+    
+    /** Called when the activity is first created. The rest of this code is just for demonstration. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,14 +177,36 @@ public class OSCSampleServer extends Activity {
         Button twoButtonsTitle = (Button) findViewById(R.id.start_button);
         twoButtonsTitle.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	startTestClient();
+            	if (!isServiceStarted) {
+            		startTestClient();
+
+                	((Button)v).setText("Stop test service");
+            	}
+            	else {
+            		stopTestClient();
+
+                	((Button)v).setText("Start test service");
+            	}
+            	
+            	isServiceStarted = !isServiceStarted;
             }
         });
         
         Button l = (Button) findViewById(R.id.start_listening_button);
         l.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	startListening();
+            	if (!isListening) {
+            		startListening();
+
+                	((Button)v).setText("Stop Listening");
+            	}
+            	else {
+            		stopListening();
+
+                	((Button)v).setText("Start Listening");
+            	}
+
+            	isListening = !isListening;
             }
         });
         
