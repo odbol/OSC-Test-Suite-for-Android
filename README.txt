@@ -22,10 +22,13 @@ Bluetooth, such as DrumPants ( http://drumpants.com ) or the VJacket ( http://vj
 will pave the way towards complete mobile performance interfaces, allowing people to perform music
 and/or video using nothing more than their phone and the clothes on their body!
 
+INSTALL:
+
 It uses the OSCLib library from:
 
 http://www.assembla.com/wiki/show/osclib
 
+Please download the library and add it to your build path.
 
 KNOWN BUGS:
 
