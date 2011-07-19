@@ -42,6 +42,14 @@
                 android:summary="The test message to send"
                 android:dialogTitle="OSC Message" />   
  
+  
+         <EditTextPreference
+                android:key="pref_timeout"
+                android:title="Service Timeout"
+                android:defaultValue="100"
+                android:summary="The amount of times to send the message before shutting down. Set to -1 to never shut down."
+                android:dialogTitle="Service Timeout" />   
+ 
              
         <!-- CheckBoxPreference
                 android:key="checkbox_preference"

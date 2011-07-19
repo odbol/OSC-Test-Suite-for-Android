@@ -4,16 +4,28 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+            <Button android:id="@+id/start_listening_button"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="1. Start Listening (OSC Server)"/>
+
             <Button android:id="@+id/start_button"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:text="Start OSC Tester Client Service"/>
+            android:text="2. Start OSC Tester Client Service"/>
             
             <Button android:id="@+id/prefs_button"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:text="Options"/> 
-<TextView  android:id="@+id/out_text"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Results:"
-    />
+            
+    <ScrollView android:id="@+id/out_scroll"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	>
+	            
+		<TextView  android:id="@+id/out_text"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="Results:"
+		    />
+	    
+	</ScrollView>
 </LinearLayout>
