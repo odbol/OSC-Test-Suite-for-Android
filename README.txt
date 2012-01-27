@@ -26,7 +26,7 @@ INSTALL:
 
 It uses the OSCLib library from:
 
-http://www.assembla.com/wiki/show/osclib
+https://github.com/odbol/OSCLib
 
 Please download the library and add it to your build path.
 
