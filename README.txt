@@ -29,7 +29,7 @@ It uses the OSCLib library from:
 
 https://github.com/odbol/OSCLib
 
-Please download the library and add it to your build path.
+Please download the library, import the "android/AndrOscDemo/" project into your workspace, and add it to this project's build path.
 
 KNOWN BUGS:
 ===============
