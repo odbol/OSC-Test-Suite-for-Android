@@ -16,7 +16,7 @@ import android.preference.PreferenceManager;
  * to a specified address every 2 seconds.
  * 
  * Use it to test your OSC server app to make sure it can receive OSC messages
- * correctly. Do this by calling startService() (see OSCSampleServer for details)
+ * correctly. Do this by calling startService() (see OSCSampleServerExampleWithTestClient for details)
  * either from your app (not recommended) or by starting the service via a separate app.
  * 
  * We will assume that the user will start their own OSC Client that sends messages,
@@ -66,15 +66,6 @@ public class OSCTesterClientService extends IntentService {
 		oscAddress = p.getString("pref_osc_addr", oscAddress);
 		oscMsgPath  = p.getString("pref_osc_msg", oscMsgPath);
 
-
-
-		//start the osc client
-		if (sender == null) {
-			sender = new OscClient(true); 
-			InetSocketAddress addr = new InetSocketAddress(oscAddress, oscPort);
-			sender.connect(addr);
-		}
-
 		//add to foreground
 		/*
 	    Notification notification = new Notification(R.drawable.icon, getText(R.string.ticker_text),
@@ -91,6 +82,13 @@ public class OSCTesterClientService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		Toast.makeText(this, "OSCTester service starting", Toast.LENGTH_SHORT).show();
 
+		//start the osc client
+		if (sender == null) {
+			sender = new OscClient(true); 
+			InetSocketAddress addr = new InetSocketAddress(oscAddress, oscPort);
+			sender.connect(addr);
+		}
+		
 		curCount = 0;
 		while (curCount++ < timeout) {
 			//send a test osc message
