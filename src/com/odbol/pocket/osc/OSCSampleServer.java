@@ -1,7 +1,5 @@
 package com.odbol.pocket.osc;
 
-import java.io.IOException;
-
 import com.relivethefuture.osc.data.BasicOscListener;
 import com.relivethefuture.osc.data.OscMessage;
 import com.relivethefuture.osc.transport.OscServer;
@@ -28,7 +26,7 @@ import android.widget.Toast;
  * 
  * It uses the OSCLib library from:
  * 
- * http://www.assembla.com/wiki/show/osclib
+ * https://github.com/odbol/OSCLib
  *  
  * 
  * @author odbol
@@ -122,7 +120,9 @@ public class OSCSampleServer extends Activity {
 				server.start();
 			}
 			catch (Exception e) {
-				Toast.makeText(this, "Failed to start OSC server: " + e.getMessage(), Toast.LENGTH_LONG);
+				Toast
+					.makeText(this, "Failed to start OSC server: " + e.getMessage(), Toast.LENGTH_LONG)
+					.show();
 				return;
 			}
 			server.addOscListener(new LooperListener());	
@@ -230,7 +230,7 @@ public class OSCSampleServer extends Activity {
             		oscPort = Integer.parseInt(p.getString("pref_osc_port", String.valueOf(DEFAULT_OSC_PORT)));
             	}
             	catch (NumberFormatException e) {
-            		Toast.makeText(this, "Invalid port in preferences", Toast.LENGTH_LONG);
+            		Toast.makeText(this, "Invalid port in preferences", Toast.LENGTH_LONG).show();
             	}
             	
             	

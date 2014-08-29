@@ -6,16 +6,9 @@ import com.relivethefuture.osc.data.OscMessage;
 import com.relivethefuture.osc.transport.OscClient;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
 import android.widget.Toast;
-import android.os.Process;
 import android.preference.PreferenceManager;
 
 /***
@@ -62,13 +55,13 @@ public class OSCTesterClientService extends IntentService {
 			oscPort = Integer.parseInt(p.getString("pref_osc_port", String.valueOf(oscPort)));
 		}
 		catch (NumberFormatException e) {
-			Toast.makeText(this, "Invalid port in preferences", Toast.LENGTH_LONG);
+			Toast.makeText(this, "Invalid port in preferences", Toast.LENGTH_LONG).show();
 		}
 		try {
 			timeout = Integer.parseInt(p.getString("pref_timeout", String.valueOf(timeout)));
 		}
 		catch (NumberFormatException e) {
-			Toast.makeText(this, "Invalid timeout in preferences", Toast.LENGTH_LONG);
+			Toast.makeText(this, "Invalid timeout in preferences", Toast.LENGTH_LONG).show();
 		}
 		oscAddress = p.getString("pref_osc_addr", oscAddress);
 		oscMsgPath  = p.getString("pref_osc_msg", oscMsgPath);
