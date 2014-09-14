@@ -1,5 +1,7 @@
 package com.odbol.pocket.osc;
 
+import java.util.ArrayList;
+
 import com.relivethefuture.osc.data.BasicOscListener;
 import com.relivethefuture.osc.data.OscMessage;
 import com.relivethefuture.osc.transport.OscServer;
@@ -99,7 +101,14 @@ public class OSCSampleServer extends Activity {
 			
 			// Get all the arguments for the message. 
 			// In this case we're assuming one and only one argument.
-			String val = msg.getArguments().get(0).toString();
+			ArrayList<Object> args = msg.getArguments();
+			String val;
+			if (args.size() > 0) {
+				val = args.get(0).toString();
+			}
+			else {
+				val = "";
+			}
 			
 			// Now you can do anything you want with it.
 			processOSCMessage(messageAddress, val);
