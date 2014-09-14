@@ -21,6 +21,8 @@ https://github.com/odbol/OSCLib
 
 Please download the library, import the "android/AndrOscDemo/" project into your workspace, and add it to this project's build path. Make sure to Export it in your build path.
 
+If you are not using Eclipse, you may also need to add the two jar files in the lib/OSCLib directory to your project, and Export them.
+
 KNOWN BUGS:
 ===============
 
